@@ -1,4 +1,4 @@
-package com.example.inventoryTrackingWebApp.Mapper;
+package com.example.inventoryTrackingWebApp.mapper;
 
 import com.example.inventoryTrackingWebApp.model.Product;
 import org.apache.ibatis.annotations.*;
@@ -20,10 +20,10 @@ public interface ProductMapper {
     int insertProduct(Product product);
 
     @Delete("DELETE FROM INVENTORY WHERE productId = #{productId}")
-    int deleteNote(Integer productId);
+    int deleteProduct(Integer productId);
 
     @Update("UPDATE INVENTORY SET productName = #{productName}, quantity = #{quantity}" +
             "WHERE productId = #{productId}")
-    int updateNote(Product product);
+    int updateProduct(Product product);
 
 }
