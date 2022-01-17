@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -27,6 +28,15 @@ public class HomeController {
         model.addAttribute("editID", editID);
 
         return "home";
+    }
+
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute("product") Product product) {
+        Product newProduct = new Product();
+        newProduct.setProductName(product.getProductName());
+        newProduct.setQuantity(product.getQuantity());
+        productService.insertProduct(newProduct);
+        return "redirect:/home";
     }
 
 }
