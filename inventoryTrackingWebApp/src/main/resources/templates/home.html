@@ -8,9 +8,62 @@
 
     <title>Inventory Management Tool</title>
 </head>
-<body class="p-3 mb-2 bg-dark text-black">
+<body class="p-3 mb-2 bg-light text-black">
 
   <h1>SmallShop Inventory</h1>
+
+  <div class="container">
+
+    <!-- add product form -->
+    <div class="row m-4">
+      <div class="col text-center m-3">
+        <form action="#" method="POST" th:object="${product}" th:action="@{/add}">
+          <div class="row form-group">
+            <label>Product Name: </label>
+            <input type="text" class="form-control" id="product-name-input" maxlength="20" required th:field="*{productName}">
+            <label>Quantity: </label>
+            <input type="text" class="form-control" id="quantity-input" maxlength="20" required th:field="*{quantity}">
+          </div>
+          <button type="submit" class="btn btn-primary float-right" id="addButton">Add Product</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- product list table-->
+    <div class="row m-4">
+      <div class="col text-center m-3">
+        <table class="table table-striped" id="productTable">
+          <thead>
+          <tr>
+            <th style="width: 20%" scope="col">Product ID</th>
+            <th style="width: 20%" scope="col">Product Name</th>
+            <th style="width: 20%" scope="col">Quantity</th>
+            <th style="width: 20%" scope="col">Actions</th>
+            <th style="width: 20%" scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="product : ${productList}">
+            <td th:text="${product.productId}">Product ID</td>
+            <td th:if="${product.productId} != ${editID}" th:text="${product.productName}">Product Name</td>
+            <td th:if="${product.productId} == ${editID}">
+              <input type="text" class="form-control" id="product-name-input-edit" maxlength="20" required th:field="*{product.productName}" th:text="${product.productName}">
+            </td>
+            <td th:if="${product.productId} != ${editID}" th:text="${product.quantity}">Quantity</td>
+            <td th:if="${product.productId} == ${editID}">
+              <input type="text" class="form-control" id="product-quantity-input-edit" maxlength="20" required th:field="*{product.Quantity}" th:text="${product.Quantity}">
+            </td>
+            <td th:if="${product.productId} != ${editID}"><a href="#" class="btn btn-primary" >Edit</a></td>
+            <td th:if="${product.productId} == ${editID}">
+              <button type="submit" class="btn btn-primary float-right" id="saveButton">Save</button>
+            </td>
+            <td th:if="${product.productId} != ${editID}"><a href="#" class="btn btn-warning" >Delete</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
