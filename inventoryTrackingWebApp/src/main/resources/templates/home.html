@@ -45,25 +45,65 @@
           <tbody>
           <tr th:each="product : ${productList}">
             <td th:text="${product.productId}">Product ID</td>
-            <td th:if="${product.productId} != ${editID}" th:text="${product.productName}">Product Name</td>
-            <td th:if="${product.productId} == ${editID}">
-              <input type="text" class="form-control" id="product-name-input-edit" maxlength="20" required th:field="*{product.productName}" th:text="${product.productName}">
-            </td>
-            <td th:if="${product.productId} != ${editID}" th:text="${product.quantity}">Quantity</td>
-            <td th:if="${product.productId} == ${editID}">
-              <input type="text" class="form-control" id="product-quantity-input-edit" maxlength="20" required th:field="*{product.Quantity}" th:text="${product.Quantity}">
-            </td>
-            <td th:if="${product.productId} != ${editID}"><a href="#" class="btn btn-primary" >Edit</a></td>
-            <td th:if="${product.productId} == ${editID}">
-              <button type="submit" class="btn btn-primary float-right" id="saveButton">Save</button>
-            </td>
-            <td th:if="${product.productId} != ${editID}"><a href="#" class="btn btn-warning" th:href="@{/delete(id=${product.productId})}">Delete</a></td>
+            <td id="" th:text="${product.productName}">Product Name</td>
+            <td th:text="${product.quantity}">Quantity</td>
+            <td><button class="btn btn-primary" th:data-note="${product}" th:attr="onclick=|showEditProductModal('${product.productId}','${product.productName}','${product.quantity}')|" >Edit</button></td>
+            <td><a href="#" class="btn btn-warning" th:href="@{/delete(id=${product.productId})}">Delete</a></td>
           </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <!-- Edit Inventory Modal -->
+    <div class="modal fade" id="editInventoryModal" tabindex="-1" role="dialog" aria-labelledby="inventoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editNoteModalLabel">Product Inventory</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="#" method="POST" th:object="${product}" th:action="@{/edit}">
+              <input type="hidden" name="productId" id="product-id-edit" th:field="${product.productId}">
+              <div class="form-group">
+                <label for="product-name-edit" class="col-form-label">Product Name</label>
+                <input type="text" name= "product-name-edit" class="form-control" id="product-name-edit" maxlength="20" required th:field="*{productName}">
+              </div>
+              <div class="form-group">
+                <label for="product-quantity-edit" class="col-form-label">Quantity</label>
+                <input class="form-control" name="product-quantity-edit" id="product-quantity-edit" maxlength="20" required th:field="*{quantity}">
+              </div>
+              <button id="editProductSubmit" type="submit" class="d-none"></button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="editProductSaveButton" class="btn btn-primary" onclick="$('#editProductSubmit').click();">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
+
+  </div>
+
+  <script th:src="@{/js/jquery-slim.min.js}"></script>
+  <script th:src="@{/js/popper.min.js}"></script>
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+
+  <script type="text/javascript">
+
+    function showEditProductModal(id, name, quantity) {
+        $('#product-id-edit').val(id);
+        $('#product-name-edit').val(name);
+        $('#product-quantity-edit').val(quantity);
+        $('#editInventoryModal').modal('show');
+    }
+
+  </script>
 </body>
 </html>
