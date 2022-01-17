@@ -57,7 +57,7 @@
             <td th:if="${product.productId} == ${editID}">
               <button type="submit" class="btn btn-primary float-right" id="saveButton">Save</button>
             </td>
-            <td th:if="${product.productId} != ${editID}"><a href="#" class="btn btn-warning" >Delete</a></td>
+            <td th:if="${product.productId} != ${editID}"><a href="#" class="btn btn-warning" th:href="@{/delete(id=${product.productId})}">Delete</a></td>
           </tr>
           </tbody>
         </table>

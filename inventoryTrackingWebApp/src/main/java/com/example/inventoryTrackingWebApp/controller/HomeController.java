@@ -39,4 +39,11 @@ public class HomeController {
         return "redirect:/home";
     }
 
+
+    @GetMapping("/delete")
+    public String deleteProduct(Integer id){
+        productService.deleteProduct(id);
+        return "redirect:/home";
+    }
+
 }
