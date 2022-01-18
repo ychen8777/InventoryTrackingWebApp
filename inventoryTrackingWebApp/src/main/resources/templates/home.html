@@ -10,7 +10,7 @@
 </head>
 <body class="p-3 mb-2 bg-light text-black">
 
-  <h1>SmallShop Inventory</h1>
+  <h1 class="ml-4">SmallShop Inventory</h1>
 
   <div class="container">
 
@@ -27,6 +27,10 @@
           <button type="submit" class="btn btn-primary float-right" id="addButton">Add Product</button>
         </form>
       </div>
+    </div>
+
+    <div class="row m-4">
+      <a href="#" class="btn btn-primary float-right" th:href="@{/report}">Generate Inventory Report</a>
     </div>
 
     <!-- product list table-->

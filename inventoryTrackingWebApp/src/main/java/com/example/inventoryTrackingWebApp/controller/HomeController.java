@@ -2,6 +2,7 @@ package com.example.inventoryTrackingWebApp.controller;
 
 import com.example.inventoryTrackingWebApp.model.Product;
 import com.example.inventoryTrackingWebApp.service.ProductService;
+import com.example.inventoryTrackingWebApp.service.ReportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,11 @@ import java.util.List;
 public class HomeController {
 
     private ProductService productService;
-    private int editID = -1;
+    private ReportService reportService;
 
-    public HomeController(ProductService productService) {
+    public HomeController(ProductService productService, ReportService reportService) {
         this.productService = productService;
+        this.reportService = reportService;
     }
 
     @GetMapping("/home")
@@ -25,7 +27,6 @@ public class HomeController {
 
         List<Product> productList = productService.getProductList();
         model.addAttribute("productList", productList);
-        model.addAttribute("editID", editID);
 
         return "home";
     }
@@ -36,6 +37,7 @@ public class HomeController {
         newProduct.setProductName(product.getProductName());
         newProduct.setQuantity(product.getQuantity());
         productService.insertProduct(newProduct);
+
         return "redirect:/home";
     }
 
@@ -43,6 +45,18 @@ public class HomeController {
     @GetMapping("/delete")
     public String deleteProduct(Integer id){
         productService.deleteProduct(id);
+        return "redirect:/home";
+    }
+
+    @PostMapping("/edit")
+    public String showEditFields(Product product) {
+        productService.updateProduct(product);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/report")
+    public String generateReport() {
+        reportService.generateReport();
         return "redirect:/home";
     }
 
