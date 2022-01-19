@@ -22,7 +22,7 @@
             <label>Product Name: </label>
             <input type="text" class="form-control" id="product-name-input" maxlength="20" required th:field="*{productName}">
             <label>Quantity: </label>
-            <input type="text" class="form-control" id="quantity-input" maxlength="20" required th:field="*{quantity}">
+            <input type="number" min="0" step="1" class="form-control" id="quantity-input" maxlength="20" required th:field="*{quantity}">
           </div>
           <button type="submit" class="btn btn-primary float-right" id="addButton">Add Product</button>
         </form>
@@ -91,7 +91,7 @@
               </div>
               <div class="form-group">
                 <label for="product-quantity-edit" class="col-form-label">Quantity</label>
-                <input class="form-control" name="product-quantity-edit" id="product-quantity-edit" maxlength="20" required th:field="*{quantity}">
+                <input type="number" min="0" step="1" class="form-control" name="product-quantity-edit" id="product-quantity-edit" maxlength="20" required th:field="*{quantity}">
               </div>
               <button id="editProductSubmit" type="submit" class="d-none"></button>
             </form>
