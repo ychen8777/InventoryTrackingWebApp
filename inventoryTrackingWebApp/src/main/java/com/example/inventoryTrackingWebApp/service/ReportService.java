@@ -34,7 +34,7 @@ public class ReportService {
     }
 
 
-    public void generateReport() {
+    public int generateReport() {
 
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
@@ -47,6 +47,7 @@ public class ReportService {
             out = new PrintWriter(new FileWriter(filePath));
         } catch (Exception e) {
             System.out.println(e);
+            return -1;
         }
 
         String header = "product_id,product_name,quantity";
@@ -61,6 +62,8 @@ public class ReportService {
             out.flush();
         }
         out.close();
+
+        return 1;
     }
 
 }
