@@ -64,19 +64,51 @@ public class HomeController {
 
     @GetMapping("/delete")
     public String deleteProduct(Integer id){
+
+        Product toBeDeleted = productService.getProduct(id);
         int result = productService.deleteProduct(id);
+
+        if (result == 1) {
+            prepareResponse(true, "Success! " + toBeDeleted.getProductName() + " has been deleted from the system!");
+        } else {
+            prepareResponse(false, "Unable to delete the product. Please try again later.");
+        }
+
         return "redirect:/home";
+
     }
 
     @PostMapping("/edit")
     public String editProduct(Product product) {
+
+        Product oldProduct = productService.getProduct(product.getProductId());
         int result = productService.updateProduct(product);
+
+        if (result == 1) {
+
+            if (!oldProduct.getProductName().equals(product.getProductName())) {
+                prepareResponse(true, "Success! " + "Changed " + oldProduct.getProductName() +
+                        " to " + product.getProductName() +"!");
+            } else {
+                prepareResponse(true, "Success! " + product.getProductName() + " has been updated!");
+            }
+
+        } else {
+            prepareResponse(false, "Unable to update the product. Please try again later.");
+        }
+
         return "redirect:/home";
     }
 
     @GetMapping("/report")
     public String generateReport() {
         int result = reportService.generateReport();
+
+        if (result == 1) {
+            prepareResponse(true, "Success! " + "Inventory report saved in " + reportService.getReportPath() + " !");
+        } else {
+            prepareResponse(false, "Unable to generate report. Please check report path has been set and try again later.");
+        }
 
         return "redirect:/home";
     }

@@ -66,4 +66,7 @@ public class ReportService {
         return 1;
     }
 
+    public String getReportPath() {
+        return reportPath;
+    }
 }
