@@ -20,9 +20,9 @@
         <form action="#" method="POST" th:object="${product}" th:action="@{/add}">
           <div class="row form-group">
             <label>Product Name: </label>
-            <input type="text" class="form-control" id="product-name-input" maxlength="20" required th:field="*{productName}">
+            <input type="text" class="form-control" id="product-name-input" maxlength="40" required th:field="*{productName}">
             <label>Quantity: </label>
-            <input type="number" min="0" step="1" class="form-control" id="quantity-input" maxlength="20" required th:field="*{quantity}">
+            <input type="number" min="0" step="1" max="2147483646" class="form-control" id="quantity-input" required th:field="*{quantity}">
           </div>
           <button type="submit" class="btn btn-primary float-right" id="addButton">Add Product</button>
         </form>
@@ -87,11 +87,11 @@
               <input type="hidden" name="productId" id="product-id-edit" th:field="${product.productId}">
               <div class="form-group">
                 <label for="product-name-edit" class="col-form-label">Product Name</label>
-                <input type="text" name= "product-name-edit" class="form-control" id="product-name-edit" maxlength="20" required th:field="*{productName}">
+                <input type="text" name= "product-name-edit" class="form-control" id="product-name-edit" maxlength="40" required th:field="*{productName}">
               </div>
               <div class="form-group">
                 <label for="product-quantity-edit" class="col-form-label">Quantity</label>
-                <input type="number" min="0" step="1" class="form-control" name="product-quantity-edit" id="product-quantity-edit" maxlength="20" required th:field="*{quantity}">
+                <input type="number" min="0" step="1" max="2147483646" class="form-control" name="product-quantity-edit" id="product-quantity-edit" required th:field="*{quantity}">
               </div>
               <button id="editProductSubmit" type="submit" class="d-none"></button>
             </form>
