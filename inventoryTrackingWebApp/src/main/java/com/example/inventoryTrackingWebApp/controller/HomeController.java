@@ -16,6 +16,11 @@ public class HomeController {
 
     private ProductService productService;
     private ReportService reportService;
+    private boolean showSuccessMessage = false;
+    private boolean showFailureMessage = false;
+    private String successMessage = "This is a success message";
+    private String failureMessage = "This is a failure message";
+
 
     public HomeController(ProductService productService, ReportService reportService) {
         this.productService = productService;
@@ -27,6 +32,15 @@ public class HomeController {
 
         List<Product> productList = productService.getProductList();
         model.addAttribute("productList", productList);
+        model.addAttribute("showSuccessMessage", showSuccessMessage);
+        model.addAttribute("showFailureMessage", showFailureMessage);
+        model.addAttribute("successMessage", successMessage);
+        model.addAttribute("failureMessage", failureMessage);
+
+        showSuccessMessage = false;
+        showFailureMessage = false;
+        successMessage = "";
+        failureMessage = "";
 
         return "home";
     }
@@ -36,7 +50,13 @@ public class HomeController {
         Product newProduct = new Product();
         newProduct.setProductName(product.getProductName());
         newProduct.setQuantity(product.getQuantity());
-        productService.insertProduct(newProduct);
+        int result = productService.insertProduct(newProduct);
+
+        if (result == 1) {
+            prepareResponse(true, "Success! " + product.getProductName() + " has been added to the system!");
+        } else {
+            prepareResponse(false, "Unable to add the product. Please try again later.");
+        }
 
         return "redirect:/home";
     }
@@ -44,20 +64,33 @@ public class HomeController {
 
     @GetMapping("/delete")
     public String deleteProduct(Integer id){
-        productService.deleteProduct(id);
+        int result = productService.deleteProduct(id);
         return "redirect:/home";
     }
 
     @PostMapping("/edit")
-    public String showEditFields(Product product) {
-        productService.updateProduct(product);
+    public String editProduct(Product product) {
+        int result = productService.updateProduct(product);
         return "redirect:/home";
     }
 
     @GetMapping("/report")
     public String generateReport() {
-        reportService.generateReport();
+        int result = reportService.generateReport();
+
         return "redirect:/home";
+    }
+
+    public void prepareResponse(boolean isSuccess, String message) {
+
+        if (isSuccess) {
+            showSuccessMessage = true;
+            successMessage = message;
+        } else {
+            showFailureMessage = true;
+            failureMessage = message;
+        }
+
     }
 
 }
